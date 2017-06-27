@@ -1,0 +1,13 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            WhereToGo-v0
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <agm-map [latitude]="currentLat" [longitude]="currentLng">
+        <agm-marker *ngFor="let entryPoint of entryPoints | async" [latitude]="entryPoint.lat" [longitude]="entryPoint.lng"></agm-marker>
+    </agm-map>
+</ion-content>
