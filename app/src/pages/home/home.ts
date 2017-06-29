@@ -18,13 +18,18 @@ export class HomePage {
     private db : AngularFireDatabase) {
 
     // Setup location watcher
-
     let watch = this.geolocation.watchPosition();
     watch.subscribe((data) => {
-    // data can be a set of coordinates, or an error (if an error occurred).
-      this.currentLat = data.coords.latitude
-      this.currentLng = data.coords.longitude;
-    }, (error) => console.error("error getting the location", error));
+      // data can be a set of coordinates, or an error (if an error occurred).
+      
+      if (data["code"] != null) {
+        // Error
+        console.error(data["message"]);
+      } else {
+        this.currentLat = data.coords.latitude;
+        this.currentLng = data.coords.longitude;
+      }
+    });
 
     // Setup entry points markers
     this.entryPoints = db.list('/entryPoints');
