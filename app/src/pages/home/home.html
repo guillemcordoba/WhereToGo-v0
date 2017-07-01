@@ -1,24 +1,8 @@
-<ion-header>
-    <ion-navbar>
-        <ion-title>
-            WhereToGo-v0
-        </ion-title>
-    </ion-navbar>
-</ion-header>
-
-<ion-content padding>
-    <ion-grid>
-        <ion-row>
-            <ion-col align-self-stretch>
-                <agm-map [latitude]="currentLat" [longitude]="currentLng">
-                    <agm-marker *ngFor="let entryPoint of entryPoints | async" [latitude]="entryPoint.lat" [longitude]="entryPoint.lng"></agm-marker>
-                </agm-map>
-            </ion-col>
-        </ion-row>
-        <ion-row justify-content-center>
-            <ion-col col-auto>
-                <button ion-button round (click)="createNewW2GGame()">Create New Game</button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+<ion-content no-padding>
+    <agm-map [latitude]="currentLat" [longitude]="currentLng">
+        <agm-marker *ngFor="let entryPoint of entryPoints | async" [latitude]="entryPoint.lat" [longitude]="entryPoint.lng"></agm-marker>
+    </agm-map>
 </ion-content>
+<ion-footer no-border>
+    <button ion-button block (click)="createNewW2GGame()">Create New Game</button>
+</ion-footer>

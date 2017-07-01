@@ -44,7 +44,7 @@ export class HomePage {
       currentLocation: {
         latitude: this.currentLat,
         longitude: this.currentLng
-      }
+      },
     });
   }
 

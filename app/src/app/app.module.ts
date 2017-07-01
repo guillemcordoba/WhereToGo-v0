@@ -34,7 +34,7 @@ export const firebaseConfig = {
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, { backButtonIcon: 'close'}),
     AngularFireModule.initializeApp(firebaseConfig),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDuYOP7nhPCkvHPlwO6dmH8nQ4MXip_6mM'

@@ -41,4 +41,15 @@ export class CreateW2GGamePage {
     console.log('ionViewDidLoad CreateW2GGamePage');
   }
 
+  saveW2GGame(event, w2ggame) {
+
+  }
+
+  addQuestion() {
+    this.w2ggame.questions.push({
+      location: this.currentLocation,
+      description: ""
+    })
+  }
+
 }

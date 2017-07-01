@@ -11,8 +11,11 @@ export class EntryPointSelectorComponent {
 
     entryPoint: Location;
 
-    selectEntryPoint(entryPoint) {
-        console.log(entryPoint);
+    selectEntryPoint(selectedMapPoint) {
+        this.entryPoint = {
+            latitude: selectedMapPoint.coords.lat,
+            longitude: selectedMapPoint.coords.lng
+        }
     }
 
 }

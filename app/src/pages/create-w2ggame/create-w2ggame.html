@@ -7,7 +7,14 @@
 <ion-header>
 
     <ion-navbar>
-        <ion-title>Create New Game</ion-title>
+        <ion-title>Create Game</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="addQuestion()">
+                <ion-icon name="add">
+                </ion-icon>
+            </button>
+            <button ion-button (click)="saveW2GGame($event, w2ggame)">SAVE</button>
+        </ion-buttons>
     </ion-navbar>
 
 </ion-header>
