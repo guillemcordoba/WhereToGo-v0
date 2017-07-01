@@ -4,6 +4,9 @@ import { NavController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
+// Page dependencies
+import { CreateW2GGamePage } from '../create-w2ggame/create-w2ggame';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
@@ -34,6 +37,10 @@ export class HomePage {
     // Setup entry points markers
     this.entryPoints = db.list('/entryPoints');
     
+  }
+
+  createNewW2GGame() {
+    this.navCtrl.push(CreateW2GGamePage);
   }
 
 }

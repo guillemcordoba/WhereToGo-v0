@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { CreateW2GGamePage } from '../pages/create-w2ggame/create-w2ggame';
 
 import { AngularFireModule } from 'angularfire2';
 import { AgmCoreModule } from '@agm/core';
@@ -24,7 +25,8 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    CreateW2GGamePage
   ],
   imports: [
     BrowserModule,
@@ -37,7 +39,8 @@ export const firebaseConfig = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    CreateW2GGamePage
   ],
   providers: [
     StatusBar,

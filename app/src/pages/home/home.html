@@ -7,7 +7,18 @@
 </ion-header>
 
 <ion-content padding>
-    <agm-map [latitude]="currentLat" [longitude]="currentLng">
-        <agm-marker *ngFor="let entryPoint of entryPoints | async" [latitude]="entryPoint.lat" [longitude]="entryPoint.lng"></agm-marker>
-    </agm-map>
+    <ion-grid>
+        <ion-row>
+            <ion-col align-self-stretch>
+                <agm-map [latitude]="currentLat" [longitude]="currentLng">
+                    <agm-marker *ngFor="let entryPoint of entryPoints | async" [latitude]="entryPoint.lat" [longitude]="entryPoint.lng"></agm-marker>
+                </agm-map>
+            </ion-col>
+        </ion-row>
+        <ion-row justify-content-center>
+            <ion-col col-auto>
+                <button ion-button round (click)="createNewW2GGame()">Create New Game</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>
