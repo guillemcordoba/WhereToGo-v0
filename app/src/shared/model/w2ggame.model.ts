@@ -10,6 +10,6 @@ export interface W2GQuestion {
 }
 
 export interface Location {
-    longitud: number,
-    latitud: number
+    longitude: number,
+    latitude: number
 }

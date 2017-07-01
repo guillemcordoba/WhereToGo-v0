@@ -1,0 +1,8 @@
+<ion-slides>
+    <ion-slide>
+        <entry-point-selector [currentLocation]="currentLocation"></entry-point-selector>
+    </ion-slide>
+    <ion-slide *ngFor="let visibleQuestion of w2ggame.questions; let idx = index">
+        <question-panel [question]="visibleQuestion" [questionNumber]="index"></question-panel>
+    </ion-slide>
+</ion-slides>

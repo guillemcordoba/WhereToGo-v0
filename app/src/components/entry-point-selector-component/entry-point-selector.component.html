@@ -1,0 +1,4 @@
+<agm-map *ngIf="currentLocation" [latitude]="currentLocation.latitude" [longitude]="currentLocation.longitude" (mapClick)="selectEntryPoint($event)">
+    <agm-marker *ngIf="entryPoint" [latitude]="entryPoint.latitude" [longitude]="entryPoint.longitude">
+    </agm-marker>
+</agm-map>

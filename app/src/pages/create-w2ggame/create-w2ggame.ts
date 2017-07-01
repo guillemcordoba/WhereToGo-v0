@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 
-import { W2GGame } from '../../shared/model/w2ggame.model';
+import { Observable } from 'rxjs/Observable';
+
+import { W2GGame, Location } from '../../shared/model/w2ggame.model';
 /**
  * Generated class for the CreateW2GGamePage page.
  *
@@ -17,16 +20,25 @@ export class CreateW2GGamePage {
 
   w2ggame: W2GGame;
 
+  currentLocation: Location;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+
+    this.currentLocation = navParams.get('currentLocation');
+
+    this.w2ggame = {
+      entryPoint: this.currentLocation,
+      questions: [
+        {
+          location: this.currentLocation,
+          description: ""
+        }
+      ]
+    };
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateW2GGamePage');
-    
-    this.w2ggame = {
-      entryPoint: undefined,
-      questions: []
-    };
   }
 
 }

@@ -13,7 +13,7 @@ import { CreateW2GGamePage } from '../create-w2ggame/create-w2ggame';
   providers: [AngularFireDatabase]
 })
 export class HomePage {
-  currentLat: number;
+    currentLat: number;
   currentLng: number;
   entryPoints: FirebaseListObservable<any>;
 
@@ -24,7 +24,7 @@ export class HomePage {
     let watch = this.geolocation.watchPosition();
     watch.subscribe((data) => {
       // data can be a set of coordinates, or an error (if an error occurred).
-      
+      console.log("New position:" + data);
       if (data["code"] != null) {
         // Error
         console.error(data["message"]);
@@ -40,7 +40,12 @@ export class HomePage {
   }
 
   createNewW2GGame() {
-    this.navCtrl.push(CreateW2GGamePage);
+    this.navCtrl.push(CreateW2GGamePage, {
+      currentLocation: {
+        latitude: this.currentLat,
+        longitude: this.currentLng
+      }
+    });
   }
 
 }
