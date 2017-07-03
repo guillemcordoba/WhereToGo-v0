@@ -7,11 +7,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { CreateW2GGamePage } from '../pages/create-w2ggame/create-w2ggame';
-import { EntryPointSelectorComponent, QuestionComponent, QuestionSetComponent } from '../components';
+import { LocationSelectorComponent, GameOptionsComponent, QuestionComponent, QuestionSetComponent } from '../components';
 
 import { AngularFireModule } from 'angularfire2';
 import { AgmCoreModule } from '@agm/core';
 import { Geolocation } from '@ionic-native/geolocation';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Configuration for angular firebase, taken from the firebase console
 export const firebaseConfig = {
@@ -30,10 +31,12 @@ export const firebaseConfig = {
     CreateW2GGamePage,
     QuestionComponent, 
     QuestionSetComponent,
-    EntryPointSelectorComponent
+    GameOptionsComponent,
+    LocationSelectorComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     IonicModule.forRoot(MyApp, { backButtonIcon: 'close'}),
     AngularFireModule.initializeApp(firebaseConfig),
     AgmCoreModule.forRoot({

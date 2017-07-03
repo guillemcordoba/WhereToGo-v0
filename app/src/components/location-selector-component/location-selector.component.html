@@ -1,0 +1,4 @@
+<agm-map #map *ngIf="currentLocation" (mapClick)="toggleState()" [@mapState]="state" [latitude]="currentLocation.latitude" [longitude]="currentLocation.longitude">
+    <agm-marker *ngIf="selectedLocation" [latitude]="selectedLocation.latitude" [longitude]="selectedLocation.longitude">
+    </agm-marker>
+</agm-map>
