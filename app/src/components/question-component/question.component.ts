@@ -1,5 +1,5 @@
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { W2GQuestion } from '../../shared/model/w2ggame.model';
 
 @Component ({
@@ -11,4 +11,6 @@ export class QuestionComponent {
     w2gQuestion : W2GQuestion;
     @Input("questionNumber")
     questionNumber : number;
+    @Output()
+    selectLocation: EventEmitter<any> = new EventEmitter();
 }

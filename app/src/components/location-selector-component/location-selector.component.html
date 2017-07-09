@@ -1,4 +1,2 @@
-<agm-map #map *ngIf="currentLocation" (mapClick)="toggleState()" [@mapState]="state" [latitude]="currentLocation.latitude" [longitude]="currentLocation.longitude">
-    <agm-marker *ngIf="selectedLocation" [latitude]="selectedLocation.latitude" [longitude]="selectedLocation.longitude">
-    </agm-marker>
-</agm-map>
+<button *ngIf="!selectedLocation" ion-button (click)="selectLocation.emit()">Pick location</button>
+<ion-label *ngIf="selectedLocation">Long: {{selectedLocation.longitude | number: '1.2-2'}}, Lat: {{selectedLocation.latitude | number: '1.2-2'}}</ion-label>

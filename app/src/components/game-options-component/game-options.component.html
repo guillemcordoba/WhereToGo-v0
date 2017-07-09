@@ -1,13 +1,16 @@
-<ion-grid no-padding stretch>
-    <ion-row>
-        <!-- Photo and location rows -->
-        <location-selector [currentLocation]="currentLocation"></location-selector>
-    </ion-row>
-    <ion-row>
+<ion-card padding>
+    <!-- Photo and location rows -->
+    <location-selector [selectedLocation]="w2ggame.entryPoint" (selectLocation)="selectLocation.emit()"></location-selector>
+    <ion-card-content>
+        <ion-card-title>
+            <!-- Question title -->
+            <ion-input type="text" placeholder="Game Name" [(ngModel)]="w2ggame.name">
+            </ion-input>
+        </ion-card-title>
         <!-- Label -->
-        <ion-col>
-            <ion-textarea placeholder="Label">
+        <p>
+            <ion-textarea placeholder="Label"> {{w2ggame.label}}
             </ion-textarea>
-        </ion-col>
-    </ion-row>
-</ion-grid>
+        </p>
+    </ion-card-content>
+</ion-card>

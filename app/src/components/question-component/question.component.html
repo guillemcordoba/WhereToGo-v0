@@ -1,24 +1,17 @@
-<ion-grid no-padding stretch>
-    <ion-row>
-        <!-- Photo and location rows -->
-    </ion-row>
-    <ion-row justify-content-start>
-        <!-- Question title -->
-        <ion-col>
-            <ion-label wrap>
+<ion-card padding>
+    <location-selector [selectedLocation]="w2gQuestion.location" (selectLocation)="selectLocation.emit()"></location-selector>
+    <ion-card-content>
+        <ion-card-title>
+            <!-- Question title -->
+            <ion-label>
                 Question number {{ questionNumber }}
             </ion-label>
-        </ion-col>
-    </ion-row>
-    <ion-row>
-        <!-- Description -->
-        <ion-col>
-            <ion-textarea placeholder="Description">
+        </ion-card-title>
+        <p>
+            <!-- Description -->
+            <ion-textarea placeholder="Description" [(ngModel)]="w2gQuestion.description">
             </ion-textarea>
-        </ion-col>
-    </ion-row>
-    <ion-row>
-        <!-- Possible answers -->
-    </ion-row>
-
-</ion-grid>
+            <!-- Possible answers -->
+        </p>
+    </ion-card-content>
+</ion-card>

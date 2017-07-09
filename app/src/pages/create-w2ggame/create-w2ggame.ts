@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 
@@ -21,16 +21,21 @@ export class CreateW2GGamePage {
   w2ggame: W2GGame;
 
   currentLocation: Location;
+  selectedLocation: Location;
+  @ViewChild("questions")
+  questionSet: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
 
     this.currentLocation = navParams.get('currentLocation');
 
     this.w2ggame = {
-      entryPoint: this.currentLocation,
+      name: "",
+      entryPoint: null,
+      label: "",
       questions: [
         {
-          location: this.currentLocation,
+          location: null,
           description: ""
         }
       ]
@@ -47,9 +52,28 @@ export class CreateW2GGamePage {
 
   addQuestion() {
     this.w2ggame.questions.push({
-      location: this.currentLocation,
+      location: null,
       description: ""
     })
+  }
+
+  selectedMapPoint($event) {
+    if (this.questionSet.isSelectingLocation()) {
+      this.selectedLocation = {
+        longitude: $event.coords.lng,
+        latitude: $event.coords.lat
+      };
+    }
+  }
+
+  buttonPressed() {
+    if (this.questionSet.isSelectingLocation()) {
+      this.questionSet.saveLocation(this.selectedLocation);
+      this.selectedLocation = null;
+    } else {
+      this.questionSet.toggleQuestionsHidden();
+    }
+
   }
 
 }

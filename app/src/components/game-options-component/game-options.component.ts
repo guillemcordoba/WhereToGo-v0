@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { W2GGame, Location } from '../../shared/model/w2ggame.model';
 
 @Component({
@@ -6,8 +6,9 @@ import { W2GGame, Location } from '../../shared/model/w2ggame.model';
   templateUrl: 'game-options.component.html',
 })
 export class GameOptionsComponent {
-    @Input("currentLocation")
-    currentLocation : Location;
-
+    @Input("w2ggame")
+    w2ggame : W2GGame;
+    @Output()
+    selectLocation: EventEmitter<any> = new EventEmitter();
 
 }
