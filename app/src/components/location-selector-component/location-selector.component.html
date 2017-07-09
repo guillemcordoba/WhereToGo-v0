@@ -1,2 +1,2 @@
-<button *ngIf="!selectedLocation" ion-button (click)="selectLocation.emit()">Pick location</button>
 <ion-label *ngIf="selectedLocation">Long: {{selectedLocation.longitude | number: '1.2-2'}}, Lat: {{selectedLocation.latitude | number: '1.2-2'}}</ion-label>
+<button ion-button color="secondary" (click)="selectLocation.emit()">Pick location</button>

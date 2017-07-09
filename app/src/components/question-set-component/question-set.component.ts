@@ -25,6 +25,7 @@ export class QuestionSetComponent {
       this.hidden = true;
       this.selectingLocation = true;
       this.selectingLocationIndex = -1;
+      this.w2ggame.entryPoint = null;
     }
 
     initSelectLocation(questionIndex: number, $event) {
