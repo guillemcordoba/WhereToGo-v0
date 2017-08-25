@@ -39,7 +39,7 @@
         <agm-marker *ngIf="selectedLocation" [latitude]="selectedLocation.latitude" [longitude]="selectedLocation.longitude">
         </agm-marker>
     </agm-map>
-    <question-set #questions id="questionset" [game]="w2ggame"></question-set>
+    <question-set #questions id="questionset" [editable]="true" [game]="w2ggame"></question-set>
 </ion-content>
 <ion-footer>
     <button ion-button block (click)="buttonPressed()">{{questions.getButtonString()}}</button>

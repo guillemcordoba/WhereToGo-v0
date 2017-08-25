@@ -28,7 +28,8 @@
         "@ionic-native/status-bar": "3.10.2",
         "@ionic/storage": "2.0.1",
         "@ngrx/core": "^1.2.0",
-        "@ngrx/store": "^2.2.2",
+        "@ngrx/effects": "github:ngrx/effects",
+        "@ngrx/store": "github:ngrx/store",
         "angularfire2": "^4.0.0-rc.1",
         "cordova-android": "^6.2.3",
         "cordova-plugin-compat": "^1.1.0",
@@ -70,5 +71,5 @@
     },
     "config": {
         "ionic_source_map": "source-map"
-    }      
+    }
 }

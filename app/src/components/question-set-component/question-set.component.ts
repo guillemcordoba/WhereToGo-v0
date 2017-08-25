@@ -9,6 +9,8 @@ import { W2GGame, Location } from '../../shared/model/w2ggame.model';
 export class QuestionSetComponent {
     @Input("game")
     w2ggame : W2GGame;
+    @Input("editable")
+    editable: boolean;
 
     hidden: boolean = false;
     selectingLocation: boolean = false;

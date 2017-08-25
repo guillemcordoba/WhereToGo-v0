@@ -1,3 +1,5 @@
+import { W2GEffects } from './../effects/w2g.effects';
+import { initialState } from './../shared/app.state';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -13,6 +15,10 @@ import { AngularFireModule } from 'angularfire2';
 import { AgmCoreModule } from '@agm/core';
 import { Geolocation } from '@ionic-native/geolocation';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from "@ngrx/store";
+import { EffectsModule } from "@ngrx/effects";
+import { reducer } from "../shared/app.dispatcher";
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 // Configuration for angular firebase, taken from the firebase console
 export const firebaseConfig = {
@@ -35,6 +41,9 @@ export const firebaseConfig = {
     LocationSelectorComponent
   ],
   imports: [
+    StoreModule.provideStore({app: reducer}, {initialState}),
+    EffectsModule.runAfterBootstrap(W2GEffects),
+    StoreRouterConnectingModule,
     BrowserModule,
     BrowserAnimationsModule,
     IonicModule.forRoot(MyApp, { backButtonIcon: 'close'}),

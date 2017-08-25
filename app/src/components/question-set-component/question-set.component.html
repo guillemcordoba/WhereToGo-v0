@@ -4,6 +4,6 @@
         </game-options>
     </ion-slide>
     <ion-slide class="slide" *ngFor="let question of w2ggame.questions; let idx = index">
-        <question-panel [question]="question" [questionNumber]="idx + 1" (selectLocation)="initSelectLocation(idx, $event)"></question-panel>
+        <question-panel [editable]="editable" [question]="question" [questionNumber]="idx + 1" (selectLocation)="initSelectLocation(idx, $event)"></question-panel>
     </ion-slide>
 </ion-slides>

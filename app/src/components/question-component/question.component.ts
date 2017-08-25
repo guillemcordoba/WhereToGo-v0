@@ -11,6 +11,8 @@ export class QuestionComponent {
     w2gQuestion : W2GQuestion;
     @Input("questionNumber")
     questionNumber : number;
+    @Input("editable")
+    editable: boolean;
     @Output()
     selectLocation: EventEmitter<any> = new EventEmitter();
 }

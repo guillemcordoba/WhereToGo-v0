@@ -1,18 +1,9 @@
-import { W2GGame } from './model/w2ggame.model';
+import { W2GGame, W2GQuestion, Location } from './model/w2ggame.model';
+import { State } from "@ngrx/store";
 
-// Starts game identified by its entry point
-export class StartGameAction {
-    constructor(public entryPoint : Location) {}
-}
-
-// Updates the current location
-export class UpdateCurrentLocationAction {
-    constructor(public currentLocation : Location) {}
-}
-
-export class CreateW2GGame {
-    constructor(public game : W2GGame) {}
-}
+export type StartGameAction = { type: 'START_GAME', payload: { entryPoint: Location, firstQuestion: W2GQuestion } }
+export type UpdateCurrentLocationAction = { type: 'UPDATE_LOCATION', payload: { currentLocation: Location } }
+export type NewQuestionReceived = { type: 'NEW_QUESTION', payload: { w2gQuestion: W2GQuestion } }
 
 
-export type Action = StartGameAction | UpdateCurrentLocationAction | CreateW2GGame;
+export type Action = StartGameAction | UpdateCurrentLocationAction | NewQuestionReceived;

@@ -1,5 +1,5 @@
 <ion-card padding>
-    <location-selector [selectedLocation]="w2gQuestion.location" (selectLocation)="selectLocation.emit()"></location-selector>
+    <location-selector *ngIf="!editable" [selectedLocation]="w2gQuestion.location" (selectLocation)="selectLocation.emit()"></location-selector>
     <ion-card-content>
         <ion-card-title>
             <!-- Question title -->
@@ -9,9 +9,11 @@
         </ion-card-title>
         <p>
             <!-- Description -->
-            <ion-textarea placeholder="Description" [(ngModel)]="w2gQuestion.description">
+            <ion-textarea *ngIf="editable" placeholder="Description" [(ngModel)]="w2gQuestion.description">
             </ion-textarea>
-            <!-- Possible answers -->
+            <p *ngIf="!editable">
+                {{w2gQuestion.description}}
+            </p>
         </p>
     </ion-card-content>
 </ion-card>

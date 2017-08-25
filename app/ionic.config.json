@@ -1,5 +1,8 @@
 {
   "name": "WhereToGo-v0",
   "app_id": "010337ff",
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
 }
