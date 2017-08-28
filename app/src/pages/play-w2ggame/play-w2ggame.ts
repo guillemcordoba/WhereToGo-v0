@@ -7,8 +7,8 @@ import { Store } from '@ngrx/store';
 @IonicPage()
 @Component({
   selector: 'play-w2ggame-page',
-  templateUrl: './play.w2ggame.component.html',
-  styleUrls: ['./play.w2ggame.component.css']
+  templateUrl: './play-w2ggame.html',
+  styleUrls: ['./play-w2ggame.css']
 })
 export class PlayW2ggameComponent implements OnInit {
 

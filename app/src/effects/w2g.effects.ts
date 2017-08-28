@@ -1,3 +1,4 @@
+import { PlayW2ggameComponent } from './../pages/play-w2ggame/play-w2ggame';
 import { CreateW2GGamePage } from './../pages/create-w2ggame/create-w2ggame';
 import { W2GQuestion, W2GGame, Location } from './../shared/model/w2ggame.model';
 import { FireBaseService } from './../service/firebase.service';
@@ -7,7 +8,6 @@ import { W2GState } from './../shared/app.state';
 import { Store } from '@ngrx/store';
 import { Action, NewQuestionReceived, SaveGameAction, StartGameAction, CreateNewGame, UpdateCurrentLocationAction, CheckQuestionResolved } from "../shared/actions";
 import { Geolocation } from '@ionic-native/geolocation';
-import { PlayW2ggameComponent } from "../pages/play-w2ggame/play-w2ggame.component";
 
 export class W2GEffects {
     
