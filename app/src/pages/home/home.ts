@@ -1,3 +1,6 @@
+import { Location } from './../../shared/model/w2ggame.model';
+import { W2GState } from './../../shared/app.state';
+import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 // Ionic dependencies
@@ -13,39 +16,28 @@ import { CreateW2GGamePage } from '../create-w2ggame/create-w2ggame';
   providers: [AngularFireDatabase]
 })
 export class HomePage {
-    currentLat: number;
+  currentLat: number;
   currentLng: number;
-  entryPoints: FirebaseListObservable<any>;
+  entryPoints: Array<Location>;
 
-  constructor(public navCtrl: NavController, public geolocation : Geolocation, 
-    private db : AngularFireDatabase) {
+  constructor(private store: Store<W2GState>) {
 
-    // Setup location watcher
-    let watch = this.geolocation.watchPosition();
-    watch.subscribe((data) => {
-      // data can be a set of coordinates, or an error (if an error occurred).
-      console.log("New position:" + data);
-      if (data["code"] != null) {
-        // Error
-        console.error(data["message"]);
-      } else {
-        this.currentLat = data.coords.latitude;
-        this.currentLng = data.coords.longitude;
-      }
+    this.store.select('currentLocation').subscribe((nextLocation: Location) => {
+      this.currentLat = nextLocation.latitude;
+      this.currentLng = nextLocation.longitude;
     });
 
     // Setup entry points markers
-    this.entryPoints = db.list('/entryPoints');
+    this.store.select('entryPoints').subscribe(
+        (nextEntryPoints: Array<Location>) => this.entryPoints = nextEntryPoints);
     
   }
 
   createNewW2GGame() {
-    this.navCtrl.push(CreateW2GGamePage, {
-      currentLocation: {
-        latitude: this.currentLat,
-        longitude: this.currentLng
-      },
-    });
+    this.store.dispatch( {type: 'CREATE_NEW_GAME', payload: { initialLocation: {
+      latitude: this.currentLat,
+      longitude: this.currentLng
+    } } });
   }
 
 }

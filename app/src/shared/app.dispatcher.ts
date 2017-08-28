@@ -8,15 +8,16 @@ import { Action, StartGameAction, UpdateCurrentLocationAction, NewQuestionReceiv
 export function reducer(state : W2GState, action : Action) : W2GState {
     switch (action.type) {
         case 'START_GAME':
-            state.currentGame = {
-                name: 'myGame',
-                label: 'label',
-                entryPoint: action.payload.entryPoint,
-                questions: [ action.payload.firstQuestion ]
-            };
+            state.currentGame = action.payload.initialGame;
             return state;
         case 'NEW_QUESTION':
             state.currentGame.questions.push(action.payload.w2gQuestion);
+            return state;
+        case 'UPDATE_LOCATION':
+            state.currentLocation = action.payload.currentLocation;
+            return state;
+        case 'UPDATE_ENTRY_POINTS':
+            state.entryPoints = action.payload.entryPoints;
             return state;
         default:
             return state;

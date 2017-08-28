@@ -18,7 +18,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
 import { reducer } from "../shared/app.dispatcher";
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 // Configuration for angular firebase, taken from the firebase console
 export const firebaseConfig = {
@@ -43,7 +42,6 @@ export const firebaseConfig = {
   imports: [
     StoreModule.provideStore({app: reducer}, {initialState}),
     EffectsModule.runAfterBootstrap(W2GEffects),
-    StoreRouterConnectingModule,
     BrowserModule,
     BrowserAnimationsModule,
     IonicModule.forRoot(MyApp, { backButtonIcon: 'close'}),

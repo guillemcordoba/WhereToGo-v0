@@ -1,3 +1,5 @@
+import { W2GState } from './../../shared/app.state';
+import { Store } from '@ngrx/store';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
@@ -25,21 +27,12 @@ export class CreateW2GGamePage {
   @ViewChild("questions")
   questionSet: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private store: Store<W2GState>, public navParams: NavParams) {
 
     this.currentLocation = navParams.get('currentLocation');
 
-    this.w2ggame = {
-      name: "",
-      entryPoint: null,
-      label: "",
-      questions: [
-        {
-          location: null,
-          description: ""
-        }
-      ]
-    };
+    this.store.select('creatingGame').subscribe((game: W2GGame) => this.w2ggame = game);
+
   }
 
   ionViewDidLoad() {
@@ -47,14 +40,15 @@ export class CreateW2GGamePage {
   }
 
   saveW2GGame(event, w2ggame) {
-
+    this.store.dispatch({ type: 'SAVE_GAME', payload: { w2gGame: w2ggame } });
   }
 
   addQuestion() {
-    this.w2ggame.questions.push({
-      location: null,
-      description: ""
-    })
+    this.store.dispatch({ type: 'CREATE_GAME_ADD_QUESTION', payload: {
+        location: null,
+        description: ""
+      }
+    });
   }
 
   selectedMapPoint($event) {

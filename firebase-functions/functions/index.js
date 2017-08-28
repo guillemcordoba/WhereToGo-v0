@@ -5,6 +5,12 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
-exports.getNearbyEntryPoints = functions.https.onRequest((request, response) => {
-    admin.database.ref('entry-points').
+exports.getNextQuestion = functions.https.onRequest((request, response) => {
+    var gameName = request.body.gameName;
+    var object = admin.database().ref('/'+gameName);
+    response.send("hello world");
+});
+
+exports.getGamesEntryPoints = functions.https.onRequest((request, response) => {
+    this.admin.database().ref('/');
 });
