@@ -1,3 +1,6 @@
+import { HttpModule } from '@angular/http';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { FireBaseService } from './../service/firebase.service';
 import { W2GEffects } from './../effects/w2g.effects';
 import { initialState } from './../shared/app.state';
 import { BrowserModule } from '@angular/platform-browser';
@@ -40,7 +43,7 @@ export const firebaseConfig = {
     LocationSelectorComponent
   ],
   imports: [
-    StoreModule.provideStore({app: reducer}, {initialState}),
+    StoreModule.provideStore({app: reducer}, {app: initialState}),
     EffectsModule.runAfterBootstrap(W2GEffects),
     BrowserModule,
     BrowserAnimationsModule,
@@ -48,7 +51,8 @@ export const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDuYOP7nhPCkvHPlwO6dmH8nQ4MXip_6mM'
-    })
+    }),
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -60,7 +64,9 @@ export const firebaseConfig = {
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Geolocation
+    Geolocation,
+    FireBaseService,
+    AngularFireDatabase
   ]
 })
 export class AppModule {}
