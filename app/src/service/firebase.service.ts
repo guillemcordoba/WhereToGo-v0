@@ -13,13 +13,13 @@ export class FireBaseService {
         return this.angularFire.list('/entryPoints');
     }
 
-    public getNextQuestionFromCurrentLocation(gameName: string, questionIndex: number, latitude: number, longitude: number) : Promise<W2GQuestion> {
+    public getNextQuestionFromCurrentLocation(gameName: string, questionIndex: number, latitude: number, longitude: number) : Observable<W2GQuestion> {
         return this.http.post('', {
             gameName: gameName,
             questionIndex: questionIndex,
             latitude: latitude,
             longitude: longitude
-        }).map((response: Response) => response.json()).toPromise();
+        }).map((response: Response) => response.json());
     }
 
     public saveW2GGame(game: W2GGame): Promise<void> {
