@@ -31,8 +31,12 @@ export class CreateW2GGamePage {
 
     this.currentLocation = navParams.get('currentLocation');
 
-    this.store.select('creatingGame').subscribe((game: W2GGame) => this.w2ggame = game);
-
+    this.store.select(s => s.creatingGame).subscribe((game: W2GGame) => {
+      console.log("hurray in the create");
+      console.log(game);
+      this.w2ggame = game;
+    });
+    
   }
 
   ionViewDidLoad() {

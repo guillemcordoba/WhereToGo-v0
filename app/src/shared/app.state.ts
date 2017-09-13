@@ -11,6 +11,6 @@ export interface W2GState {
 export const initialState: W2GState = {
     currentGame: null,
     creatingGame: null,
-    entryPoints: [],
+    entryPoints: [{latitude: 40, longitude: 2}],
     currentLocation: null
 }

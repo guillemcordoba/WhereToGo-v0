@@ -8,12 +8,13 @@ import { EffectsModule, Effect, Actions } from '@ngrx/effects';
 import { NavController, App } from 'ionic-angular';
 import { W2GState } from './../shared/app.state';
 import { Store } from '@ngrx/store';
-import { Action, NewQuestionReceived, SaveGameAction, StartGameAction, CreateNewGame, UpdateCurrentLocationAction, CheckQuestionResolved } from "../shared/actions";
+import { Action, NewQuestionReceived, SaveGameAction, StartGameAction, CreateNewGame, ReceivedLocation, CheckQuestionResolved } from "../shared/actions";
 import { Geolocation } from '@ionic-native/geolocation';
 import 'rxjs/add/operator/switchMap';
 import { map } from 'rxjs/operator/map';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/do';
 
 @Injectable()
 export class W2GEffects {
@@ -21,29 +22,42 @@ export class W2GEffects {
     constructor(private actions$: Actions, private store: Store<W2GState>, private app: App,
         private geolocation: Geolocation, private backend: FireBaseService) {}
 
-    @Effect()
-    createNewGame = this.actions$.ofType('CREATE_NEW_GAME').map((newGameActions: CreateNewGame) => {
-        this.app.getActiveNav().push(CreateW2GGamePage, {
-            currentLocation: newGameActions.payload.initialLocation
-        });
-        return Observable.of(newGameActions);
-    });
+    /*@Effect()
+    createNewGame = this.actions$.ofType('CREATE_NEW_GAME')
+        //.map((newGameAction: CreateNewGame) => newGameAction.payload.initialLocation)
+        .do((location) => {
+            this.app.getActiveNav().push(CreateW2GGamePage);
+    });*/
     
-    @Effect() 
-    updateCurrentPosition = this.geolocation.watchPosition().switchMap((data) => {
+    @Effect()
+    updateLocation = this.actions$.ofType('GET_LOCATION').switchMap(() => 
+        this.geolocation.watchPosition()
+        .map((data) => {
+            console.log("Received new location data");
+            if (data["coords"] != null) {  
+                console.log("got the new location");
+                let nextLocation: Location = {
+                    longitude: data.coords.longitude,
+                    latitude: data.coords.latitude
+                }
+                return ({type: 'RECEIVED_LOCATION', payload: { currentLocation:  nextLocation } });
+            }
+            console.log("there was an error getting the location");
+        })
+    );
+/*
+    updateCurrentPosition = this.geolocation.watchPosition().map((data) => {
+        console.log("Received new location data");
         if (data["coords"] != null) {  
+            console.log("got the new location");
             let nextLocation: Location = {
                 longitude: data.coords.longitude,
                 latitude: data.coords.latitude
             }
-            this.store.dispatch({type: 'UPDATE_LOCATION', payload: { currentLocation:  nextLocation } });
+            return ({type: 'UPDATE_LOCATION', payload: { currentLocation:  nextLocation } });
         }
-        return Observable.of(data);
-    }).catch((error)=>{
-        console.log(error);
-        return Observable.of(error);
-    });
-
+    });*/
+/*
     @Effect()
     getNextQuestion = this.actions$.ofType('CHECK_QUESTION_RESOLVED')
         .switchMap((checkQuestion: CheckQuestionResolved) =>
@@ -56,20 +70,26 @@ export class W2GEffects {
                     }
                 })
         );
- 
-    @Effect()
-    updateEntryPoints = this.backend.getAvailableEntryPoints()
-        .switchMap((nextEntryPoints: Array<Location>) => {
-            this.store.dispatch({ 
-                type: 'UPDATE_ENTRY_POINTS',
-                payload: {
-                    entryPoints: nextEntryPoints
-                }
-            })
-            return Observable.of(nextEntryPoints);
-        }).catch((error)=>Observable.of(error));
+ */
 
-    @Effect() 
+    @Effect()
+    updateEntryPoints = this.actions$.ofType('GET_ENTRY_POINTS')
+    .switchMap(() => 
+        this.backend.getAvailableEntryPoints()
+            .map((nextEntryPoints: Array<Location>) => 
+                ({
+                    type: 'RECEIVED_ENTRY_POINTS',
+                    payload: {
+                        entryPoints: nextEntryPoints
+                    }
+                })
+            ).catch((error)=>{
+                console.log("error getting the entry points");
+                return Observable.of(error);
+            })
+    );
+
+    /*@Effect() 
     saveW2GGame = this.actions$.ofType('SAVE_GAME').switchMap((saveGameAction: SaveGameAction) => {
         return this.backend.saveW2GGame(saveGameAction.payload.w2gGame).catch((error) => {
             console.log("error saving game");
@@ -85,5 +105,5 @@ export class W2GEffects {
         });
         return Observable.of(nextValue);
     });
-
+*/
 }

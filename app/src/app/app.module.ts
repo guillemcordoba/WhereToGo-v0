@@ -20,6 +20,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
+//import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { reducer } from "../shared/app.dispatcher";
 
 // Configuration for angular firebase, taken from the firebase console
@@ -43,8 +44,9 @@ export const firebaseConfig = {
     LocationSelectorComponent
   ],
   imports: [
-    StoreModule.provideStore({app: reducer}, {app: initialState}),
+    StoreModule.provideStore(reducer, initialState),
     EffectsModule.runAfterBootstrap(W2GEffects),
+    //StoreDevtoolsModule.instrument(),
     BrowserModule,
     BrowserAnimationsModule,
     IonicModule.forRoot(MyApp, { backButtonIcon: 'close'}),
