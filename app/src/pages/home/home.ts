@@ -15,31 +15,31 @@ import { CreateW2GGamePage } from '../create-w2ggame/create-w2ggame';
   selector: 'page-home',
   templateUrl: 'home.html',
   providers: [AngularFireDatabase],
-//  changeDetection: ChangeDetectionStrategy.OnPush  
+  changeDetection: ChangeDetectionStrategy.OnPush  
 })
 export class HomePage implements OnInit {
+
   currentLocation$: Observable<Location>;
   entryPoints$: Observable<Array<Location>>;
 
-  constructor(private store: Store<W2GState>) {
+  constructor(private store: Store<W2GState>) {}
+
+  public ngOnInit() {
     this.store.dispatch({type: 'GET_LOCATION', payload: {} });
     this.store.dispatch({ type: 'GET_ENTRY_POINTS', payload: {} });
 
     this.currentLocation$ = this.store.select(s => s.currentLocation);
-    
-    // Setup entry points markers
-    this.entryPoints$ = this.store.select(s => s.entryPoints);
-  }
 
-  public ngOnInit() {
-    
+    // Setup entry points markers
+    this.entryPoints$ = this.store.select(s => s.entryPoints);  
   }
 
   createNewW2GGame() {
-    /*this.store.dispatch( {type: 'CREATE_NEW_GAME', payload: { initialLocation: {
-      latitude: this.currentLocation$.,
-      longitude: this.currentLng
-    } } });*/
+    this.store.dispatch( {type: 'CREATE_NEW_GAME', payload: {} });
+  }
+
+  entryPointClicked($event) {
+    console.log($event);
   }
 
 }

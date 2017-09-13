@@ -22,41 +22,50 @@ export class W2GEffects {
     constructor(private actions$: Actions, private store: Store<W2GState>, private app: App,
         private geolocation: Geolocation, private backend: FireBaseService) {}
 
-    /*@Effect()
-    createNewGame = this.actions$.ofType('CREATE_NEW_GAME')
-        //.map((newGameAction: CreateNewGame) => newGameAction.payload.initialLocation)
-        .do((location) => {
-            this.app.getActiveNav().push(CreateW2GGamePage);
-    });*/
-    
-    @Effect()
-    updateLocation = this.actions$.ofType('GET_LOCATION').switchMap(() => 
-        this.geolocation.watchPosition()
-        .map((data) => {
-            console.log("Received new location data");
-            if (data["coords"] != null) {  
-                console.log("got the new location");
-                let nextLocation: Location = {
-                    longitude: data.coords.longitude,
-                    latitude: data.coords.latitude
-                }
-                return ({type: 'RECEIVED_LOCATION', payload: { currentLocation:  nextLocation } });
-            }
-            console.log("there was an error getting the location");
-        })
-    );
-/*
-    updateCurrentPosition = this.geolocation.watchPosition().map((data) => {
-        console.log("Received new location data");
+    locationFromData(data) : Location {
         if (data["coords"] != null) {  
-            console.log("got the new location");
-            let nextLocation: Location = {
+            return <Location>{
                 longitude: data.coords.longitude,
                 latitude: data.coords.latitude
             }
-            return ({type: 'UPDATE_LOCATION', payload: { currentLocation:  nextLocation } });
-        }
-    });*/
+        } else return null;
+    }
+    
+    @Effect()
+    updateLocation = this.actions$.ofType('GET_LOCATION').switchMap(() => 
+        this.geolocation.watchPosition())
+        .map(this.locationFromData)
+        .map((location: Location) => {
+            console.log("Received new location data");
+            if (location != null)
+                return ({type: 'RECEIVED_LOCATION', payload: { currentLocation:  location } });
+        });
+    
+    @Effect()
+    updateEntryPoints = this.actions$.ofType('GET_ENTRY_POINTS')
+    .switchMap(() => 
+        this.backend.getAvailableEntryPoints()
+            .map((nextEntryPoints: Array<Location>) => 
+                ({
+                    type: 'RECEIVED_ENTRY_POINTS',
+                    payload: {
+                        entryPoints: nextEntryPoints
+                    }
+                })
+            ).catch((error) => {
+                console.log("error getting the entry points");
+                return Observable.of(error);
+            })
+    );
+
+    @Effect()
+    createNewGame = this.actions$.ofType('CREATE_NEW_GAME')
+        .switchMap((newGameAction: CreateNewGame) => this.geolocation.getCurrentPosition())
+        .map(this.locationFromData)
+        .do((location: Location) => {
+            this.app.getActiveNav().push(CreateW2GGamePage);
+    });
+    
 /*
     @Effect()
     getNextQuestion = this.actions$.ofType('CHECK_QUESTION_RESOLVED')
@@ -71,23 +80,6 @@ export class W2GEffects {
                 })
         );
  */
-
-    @Effect()
-    updateEntryPoints = this.actions$.ofType('GET_ENTRY_POINTS')
-    .switchMap(() => 
-        this.backend.getAvailableEntryPoints()
-            .map((nextEntryPoints: Array<Location>) => 
-                ({
-                    type: 'RECEIVED_ENTRY_POINTS',
-                    payload: {
-                        entryPoints: nextEntryPoints
-                    }
-                })
-            ).catch((error)=>{
-                console.log("error getting the entry points");
-                return Observable.of(error);
-            })
-    );
 
     /*@Effect() 
     saveW2GGame = this.actions$.ofType('SAVE_GAME').switchMap((saveGameAction: SaveGameAction) => {

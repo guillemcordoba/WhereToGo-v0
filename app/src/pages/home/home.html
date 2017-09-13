@@ -1,6 +1,16 @@
 <ion-content no-padding>
-    <agm-map *ngIf="currentLocation$ | async" [latitude]="(currentLocation$ | async).latitude" [longitude]="(currentLocation$ | async).longitude">
-        <agm-marker *ngFor="let entryPoint of (entryPoints$ | async)" [latitude]="entryPoint.lat" [longitude]="entryPoint.lng"></agm-marker>
+    <agm-map [zoom]="16" [streetViewControl]="false" *ngIf="currentLocation$ | async" [latitude]="(currentLocation$ | async).latitude" [longitude]="(currentLocation$ | async).longitude">
+        <agm-marker
+            [markerClickable]="false"
+            [latitude]="(currentLocation$ | async).latitude" 
+            [longitude]="(currentLocation$ | async).longitude">
+        </agm-marker>
+        <agm-marker *ngFor="let entryPoint of (entryPoints$ | async); let idx = index" 
+            [iconUrl]="'assets/icon/compass.png'"
+            [latitude]="entryPoint.latitude" 
+            [longitude]="entryPoint.longitude"
+            (markerClick)="entryPointClicked(idx)">
+        </agm-marker>
     </agm-map>
 </ion-content>
 <ion-footer no-border>
