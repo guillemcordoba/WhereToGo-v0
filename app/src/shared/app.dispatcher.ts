@@ -15,8 +15,14 @@ export function reducer(state : W2GState, action : Action) : W2GState {
                 creatingGame: <W2GGame>{
                     name: 'NEW GAME',
                     entryPoint: null,
-                    label: 'some label',
+                    label: '',
                     questions: []
+                }
+            });
+        case 'CREATE_GAME_ADD_QUESTION':
+            return Object.assign({}, state, {
+                creatingGame: {
+                    questions: [...state.creatingGame.questions, action.payload.question]
                 }
             });
         case 'START_GAME':

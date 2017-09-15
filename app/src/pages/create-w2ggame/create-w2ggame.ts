@@ -71,7 +71,6 @@ export class CreateW2GGamePage {
     } else {
       this.questionSet.toggleQuestionsHidden();
     }
-
   }
 
 }

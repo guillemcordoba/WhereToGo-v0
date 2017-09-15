@@ -15,6 +15,9 @@ import { map } from 'rxjs/operator/map';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/withLatestFrom';
+import Rx from "rxjs/Rx";
+import 'rxjs/add/observable/fromPromise';
 
 @Injectable()
 export class W2GEffects {
@@ -32,39 +35,43 @@ export class W2GEffects {
     }
     
     @Effect()
-    updateLocation = this.actions$.ofType('GET_LOCATION').switchMap(() => 
-        this.geolocation.watchPosition())
+    updateLocation = this.actions$
+        .ofType('GET_LOCATION')
+        .switchMap(() => this.geolocation.watchPosition())
         .map(this.locationFromData)
         .map((location: Location) => {
             console.log("Received new location data");
+            console.log(location);
             if (location != null)
                 return ({type: 'RECEIVED_LOCATION', payload: { currentLocation:  location } });
+            else Observable.of();
         });
     
     @Effect()
-    updateEntryPoints = this.actions$.ofType('GET_ENTRY_POINTS')
-    .switchMap(() => 
-        this.backend.getAvailableEntryPoints()
+    updateEntryPoints = this.actions$
+        .ofType('GET_ENTRY_POINTS')
+        .switchMap(() => this.backend.getAvailableEntryPoints()
             .map((nextEntryPoints: Array<Location>) => 
                 ({
                     type: 'RECEIVED_ENTRY_POINTS',
                     payload: {
                         entryPoints: nextEntryPoints
                     }
-                })
-            ).catch((error) => {
-                console.log("error getting the entry points");
-                return Observable.of(error);
-            })
-    );
+                })))
+        .catch((error) => {
+            console.log("error getting the entry points");
+            return Observable.of();
+        });
 
     @Effect()
     createNewGame = this.actions$.ofType('CREATE_NEW_GAME')
-        .switchMap((newGameAction: CreateNewGame) => this.geolocation.getCurrentPosition())
-        .map(this.locationFromData)
-        .do((location: Location) => {
-            this.app.getActiveNav().push(CreateW2GGamePage);
-    });
+        .withLatestFrom(this.store)
+        .map(([action, state]) => state.currentLocation)
+        .do(location => {
+            this.app.getActiveNav().push(CreateW2GGamePage, {
+                currentLocation: location
+            });
+        });
     
 /*
     @Effect()
