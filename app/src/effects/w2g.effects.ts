@@ -31,20 +31,20 @@ export class W2GEffects {
                 longitude: data.coords.longitude,
                 latitude: data.coords.latitude
             }
-        } else return null;
+        } else throw "error getting the location";
     }
     
     @Effect()
     updateLocation = this.actions$
         .ofType('GET_LOCATION')
-        .switchMap(() => this.geolocation.watchPosition())
-        .map(this.locationFromData)
+        .switchMap(() => 
+            this.geolocation.watchPosition()
+                .map(this.locationFromData)
+                .catch(() => Observable.of()))
         .map((location: Location) => {
             console.log("Received new location data");
             console.log(location);
-            if (location != null)
-                return ({type: 'RECEIVED_LOCATION', payload: { currentLocation:  location } });
-            else Observable.of();
+            return ({type: 'RECEIVED_LOCATION', payload: { currentLocation:  location } });
         });
     
     @Effect()
